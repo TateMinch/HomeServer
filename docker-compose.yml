@@ -12,28 +12,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
 
-  photoprism:
-    image: photoprism/photoprism:${PHOTOPRISM_VERSION}
-    container_name: photoprism
-    restart: unless-stopped
-    depends_on:
-      - tailscale
-      - mariadb
-    ports:
-      - "${PHOTOPRISM_PORT}:2342"
-    environment:
-      PHOTOPRISM_ADMIN_PASSWORD: "${PHOTOPRISM_ADMIN_PASSWORD}"
-      PHOTOPRISM_STORAGE_PATH: "/photostorage/storage"
-      PHOTOPRISM_ORIGINALS_PATH: "/photostorage/originals"
-      PHOTOPRISM_DATABASE_DRIVER: "mysql"
-      PHOTOPRISM_DATABASE_SERVER: "mariadb:3306"
-      PHOTOPRISM_DATABASE_NAME: "${PHOTOPRISM_DB_NAME}"
-      PHOTOPRISM_DATABASE_USER: "${PHOTOPRISM_DB_USER}"
-      PHOTOPRISM_DATABASE_PASSWORD: "${PHOTOPRISM_DB_PASSWORD}"
-    volumes:
-      - ${PHOTOPRISM_ORIGINALS}:/photostorage/originals
-      - ${PHOTOPRISM_STORAGE}:/photostorage/storage
-
   jellyfin:
     image: jellyfin/jellyfin:${JELLYFIN_VERSION}
     container_name: jellyfin
